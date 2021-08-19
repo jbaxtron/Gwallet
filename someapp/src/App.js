@@ -25,7 +25,7 @@ function App() {
     {
       id: "ADA",
       name: "Cardano",
-      amount: "8000",
+      amount: "1204",
       price: "0",
       value: 0
     }
@@ -59,7 +59,7 @@ function App() {
 
       </div>
       <Cryptos coins = {coins} allCryptos={allCryptos}/>
-      <Total coins= {coins} allCryptos={allCryptos}/>
+      
       <Filter findCrypto={findCrypto} />
       <List allCryptos={allCryptos} search={search} />
     </div>
@@ -129,12 +129,16 @@ const Wallet = ({ coins, allCryptos }) => {
   return (
     <div>
       {coins.map(coin => <p key={coin.id}> {coin.name} {coin.amount} {formatter.formatter.format(currentValue(coin.id))} {formatter.formatter.format(((parseInt(coin.amount)) * parseFloat(currentValue(coin.id))))}</p>)}
+      <Total coins = {coins} currentValue = {currentValue}/>
     </div>
   )
 }
 
-const Total = ({coins}) => {
-  const value = coins.map(x => parseInt(x.value)).reduce((x, y) => x + y)
+const Total = ({coins, currentValue}) => {
+  const value = coins
+  .map(coin =>((parseFloat(coin.amount)) * parseFloat(currentValue(coin.id))) 
+  ).reduce((x, y) => x + y)
+
   console.log(`total value : ${value}`)
 
   return (
